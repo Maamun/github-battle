@@ -2,12 +2,54 @@ import React, {
   Component,
 } from 'react';
 
+function LanguagesNav({
+  selected,
+  onUpdateLanguage,
+}) {
+  const languages = [
+    'All',
+    'JavaScript',
+    'Ruby',
+    'Java',
+    'CSS',
+    'Python',
+  ];
+  return (
+    <div className="popular">
+      <ul className="nav-link">
+        {languages.map((language) => (
+          <li key={language}>
+            <button
+              className={
+                language === selected
+                  ? 'active'
+                  : null
+              }
+              onClick={() =>
+                onUpdateLanguage(
+                  language
+                )
+              }
+            >
+              {language}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 class Popular extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedLanguage: 'All',
     };
+    console.log('here', this);
+    this.updateLanguage = this.updateLanguage.bind(
+      this
+    );
   }
   updateLanguage(selectedLanguage) {
     this.setState({
@@ -15,42 +57,17 @@ class Popular extends Component {
     });
   }
   render() {
-    const languages = [
-      'All',
-      'JavaScript',
-      'Ruby',
-      'Java',
-      'CSS',
-      'Python',
-    ];
+    const {
+      selectedLanguage,
+    } = this.state;
     return (
       <div className="main">
-        <div className="popular">
-          <ul className="nav-link">
-            {languages.map(
-              (language) => (
-                <li key={language}>
-                  <button
-                    className={
-                      language ===
-                      this.state
-                        .selectedLanguage
-                        ? 'active'
-                        : null
-                    }
-                    onClick={() =>
-                      this.updateLanguage(
-                        language
-                      )
-                    }
-                  >
-                    {language}
-                  </button>
-                </li>
-              )
-            )}
-          </ul>
-        </div>
+        <LanguagesNav
+          selected={selectedLanguage}
+          onUpdateLanguage={
+            this.updateLanguage
+          }
+        />
         <div className="grid"></div>
       </div>
     );
