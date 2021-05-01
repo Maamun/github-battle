@@ -2,7 +2,18 @@ import React, {
   Component,
 } from 'react';
 
-export default class Popular extends Component {
+class Popular extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedLanguage: 'All',
+    };
+  }
+  updateLanguage(selectedLanguage) {
+    this.setState({
+      selectedLanguage,
+    });
+  }
   render() {
     const languages = [
       'All',
@@ -13,17 +24,36 @@ export default class Popular extends Component {
       'Python',
     ];
     return (
-      <div className="flex-center">
-        <ul className="nav-link">
-          {languages.map((language) => (
-            <li key="languages">
-              <button>
-                {language}
-              </button>
-            </li>
-          ))}
-        </ul>
+      <div className="main">
+        <div className="popular">
+          <ul className="nav-link">
+            {languages.map(
+              (language) => (
+                <li key={language}>
+                  <button
+                    className={
+                      language ===
+                      this.state
+                        .selectedLanguage
+                        ? 'active'
+                        : null
+                    }
+                    onClick={() =>
+                      this.updateLanguage(
+                        language
+                      )
+                    }
+                  >
+                    {language}
+                  </button>
+                </li>
+              )
+            )}
+          </ul>
+        </div>
+        <div className="grid"></div>
       </div>
     );
   }
 }
+export default Popular;
